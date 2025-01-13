@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import getCuratedPhotos, { CuratedPhoto } from "./utils/api";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import getCuratedPhotos, { CuratedPhoto } from './utils/api';
 
 const Container = styled.div`
   max-width: 85%;
@@ -23,7 +23,7 @@ const App: React.FC = () => {
 
   const loadPhotos = async () => {
     const data = await getCuratedPhotos();
-    setPhotos((photos) => [...photos, ...data.photos]);
+    setPhotos(photos => [...photos, ...data.photos]);
   };
 
   useEffect(() => {

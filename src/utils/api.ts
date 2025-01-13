@@ -31,21 +31,16 @@ export interface GetCuratedPhotosResponse {
 
 export default async function getCuratedPhotos(
   page: number = 1,
-  perPage: number = 15
+  perPage: number = 15,
 ): Promise<GetCuratedPhotosResponse> {
-  const response = await fetch(
-    `${
-      import.meta.env.VITE_PEXELS_API_URL
-    }/curated?page=${page}&per_page=${perPage}`,
-    {
-      headers: {
-        Authorization: import.meta.env.VITE_PEXELS_API_KEY,
-      },
-    }
-  );
+  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${page}&per_page=${perPage}`, {
+    headers: {
+      Authorization: import.meta.env.VITE_PEXELS_API_KEY,
+    },
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch photos");
+    throw new Error('Failed to fetch photos');
   }
 
   const data: GetCuratedPhotosResponse = await response.json();
