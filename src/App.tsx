@@ -1,42 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import getCuratedPhotos, { CuratedPhoto } from './utils/api';
+import MasonryGrid from './components/MasonryGrid';
 
 const Container = styled.div`
-  max-width: 85%;
+  max-width: 90%;
   margin: 20px auto;
 `;
 
-const ImageContainer = styled.div`
-  columns: 3 250px;
-  gap: 15px;
-
-  img {
-    margin-bottom: 10px;
-    border-radius: 5px;
-    width: 100%;
-  }
-`;
-
-const App: React.FC = () => {
-  const [photos, setPhotos] = useState<CuratedPhoto[]>([]);
-
-  const loadPhotos = async () => {
-    const data = await getCuratedPhotos();
-    setPhotos(photos => [...photos, ...data.photos]);
-  };
-
-  useEffect(() => {
-    loadPhotos();
-  }, []);
-
+const App = () => {
   return (
     <Container>
-      <ImageContainer>
-        {photos.map(({ src, id }, index) => (
-          <img key={id} src={src.medium} data-index={index} />
-        ))}
-      </ImageContainer>
+      <MasonryGrid />
     </Container>
   );
 };
