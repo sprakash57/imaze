@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MasonryGrid from './components/MasonryGrid';
+import MasonryGrid from '@/components/MasonryGrid';
 
 const Container = styled.div`
   max-width: 90%;

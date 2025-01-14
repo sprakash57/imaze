@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
-import getCuratedPhotos, { CuratedPhoto } from '../utils/api';
 import styled from 'styled-components';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import getCuratedPhotos, { CuratedPhoto } from '@/utils/api';
 
 const ImageContainer = styled.div`
   columns: 4 180px;
@@ -12,6 +12,11 @@ const ImageContainer = styled.div`
     border-radius: 5px;
     width: 100%;
   }
+`;
+
+const LoadMoreSection = styled.div`
+  height: 500px;
+  width: 100%;
 `;
 
 const MasonryGrid = () => {
@@ -44,7 +49,7 @@ const MasonryGrid = () => {
           <img key={photo.id} src={photo.src.large} alt={photo.alt} />
         ))}
       </ImageContainer>
-      {nextPage && <div ref={loadMoreRef} />}
+      {nextPage && <LoadMoreSection ref={loadMoreRef} />}
     </>
   );
 };
