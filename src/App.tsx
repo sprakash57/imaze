@@ -1,16 +1,13 @@
-import styled from 'styled-components';
-import MasonryGrid from '@/components/MasonryGrid';
-
-const Container = styled.div`
-  max-width: 90%;
-  margin: 20px auto;
-`;
+import { Routes, Route } from 'react-router';
+import Home from '@/routes/home';
+import PhotoDetail from '@/routes/PhotoDetail';
 
 const App = () => {
   return (
-    <Container>
-      <MasonryGrid />
-    </Container>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/imaze/:id" element={<PhotoDetail />} />
+    </Routes>
   );
 };
 

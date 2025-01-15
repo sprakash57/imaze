@@ -23,7 +23,7 @@ const useInfiniteScroll = ({ fetchData, targetRef }: UseInfiniteScrollProps) => 
 
   useEffect(() => {
     if (targetRef.current) {
-      observerRef.current = new IntersectionObserver(handleIntersection);
+      observerRef.current = new IntersectionObserver(handleIntersection, { threshold: 0.6 });
 
       observerRef.current.observe(targetRef.current);
     }

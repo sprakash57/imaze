@@ -31,7 +31,7 @@ export interface GetCuratedPhotosResponse {
 
 export default async function getCuratedPhotos(
   page: number = 1,
-  perPage: number = 15,
+  perPage: number = 20,
 ): Promise<GetCuratedPhotosResponse> {
   const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${page}&per_page=${perPage}`, {
     headers: {
