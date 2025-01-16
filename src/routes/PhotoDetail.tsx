@@ -5,7 +5,7 @@ const PhotoDetail = () => {
   const navigate = useNavigate();
 
   const handleBackNavigation = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (

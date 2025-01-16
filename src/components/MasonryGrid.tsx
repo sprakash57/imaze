@@ -18,8 +18,9 @@ const ImageContainer = styled.div`
 const MasonryGrid = () => {
   const navigate = useNavigate();
   const [photos, setPhotos] = useState<CuratedPhoto[]>([]);
-  const [nextPage, setNextPage] = useState<number | undefined>(1);
+  const [nextPage, setNextPage] = useState<string>('1');
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const uniquePhotosRef = useRef(new Set());
 
   const getUniquePhotos = (photos: CuratedPhoto[]) => {
@@ -29,12 +30,10 @@ const MasonryGrid = () => {
   };
 
   const getPhotos = useCallback(async () => {
-    const { photos: newPhotos, next_page } = await getCuratedPhotos(nextPage);
-    const nextPageUrl = next_page ? new URL(next_page) : '';
-    const nextPageInUrl = nextPageUrl ? nextPageUrl.searchParams.get('page') : undefined;
+    const { photos: newPhotos, next_page } = await getCuratedPhotos({ pageParam: nextPage });
     const uniquePhotos = getUniquePhotos(newPhotos);
     setPhotos(prevPhotos => [...prevPhotos, ...uniquePhotos]);
-    setNextPage(nextPageInUrl ? parseInt(nextPageInUrl) : undefined);
+    setNextPage(next_page);
   }, [nextPage]);
 
   const handlePhotoClick = (id: number) => {
@@ -45,7 +44,7 @@ const MasonryGrid = () => {
 
   return (
     <>
-      <ImageContainer>
+      <ImageContainer ref={containerRef}>
         {photos.map(photo => (
           <img key={photo.id} src={photo.src.large} alt={photo.alt} onClick={() => handlePhotoClick(photo.id)} />
         ))}

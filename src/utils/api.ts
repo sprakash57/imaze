@@ -29,11 +29,12 @@ export interface GetCuratedPhotosResponse {
   next_page: string;
 }
 
-export default async function getCuratedPhotos(
-  page: number = 1,
-  perPage: number = 50,
-): Promise<GetCuratedPhotosResponse> {
-  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${page}&per_page=${perPage}`, {
+export default async function getCuratedPhotos({
+  pageParam = '1',
+}: {
+  pageParam: string;
+}): Promise<GetCuratedPhotosResponse> {
+  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${pageParam}&per_page=${20}`, {
     headers: {
       Authorization: import.meta.env.VITE_PEXELS_API_KEY,
     },
@@ -45,5 +46,8 @@ export default async function getCuratedPhotos(
 
   const data: GetCuratedPhotosResponse = await response.json();
 
-  return data;
+  const nextPageUrl = data.next_page ? new URL(data.next_page) : '';
+  const nextPageInUrl = nextPageUrl ? nextPageUrl.searchParams.get('page') : undefined;
+
+  return { ...data, next_page: nextPageInUrl || '' };
 }
