@@ -23,7 +23,7 @@ export const handlers = [
     return HttpResponse.json(null, { status: 404 });
   }),
 
-  http.get('https://api.pexels.com/v1/curated?page=1&per_page=20', () => {
+  http.get('https://api.pexels.com/v1/curated', () => {
     return HttpResponse.json(
       {
         page: 1,

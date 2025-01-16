@@ -7,13 +7,11 @@ interface UseInfiniteScrollProps {
 
 const useInfiniteScroll = ({ fetchData, targetRef }: UseInfiniteScrollProps) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const isFetching = useRef(false);
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !isFetching.current) {
-          isFetching.current = true;
+        if (entry.isIntersecting) {
           fetchData();
         }
       });
@@ -38,10 +36,6 @@ const useInfiniteScroll = ({ fetchData, targetRef }: UseInfiniteScrollProps) => 
       }
     };
   }, [targetRef, handleIntersection]);
-
-  useEffect(() => {
-    isFetching.current = false;
-  }, [fetchData]);
 
   return;
 };
