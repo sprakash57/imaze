@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import getCuratedPhotos, { CuratedPhoto } from '@/utils/api';
+import { CuratedPhoto, getCuratedPhotos } from '@/utils/api';
 
 const ImageContainer = styled.div`
   columns: 4 180px;

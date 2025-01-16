@@ -29,11 +29,7 @@ export interface GetCuratedPhotosResponse {
   next_page: string;
 }
 
-export default async function getCuratedPhotos({
-  pageParam = '1',
-}: {
-  pageParam: string;
-}): Promise<GetCuratedPhotosResponse> {
+export async function getCuratedPhotos({ pageParam = '1' }: { pageParam: string }): Promise<GetCuratedPhotosResponse> {
   const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${pageParam}&per_page=${20}`, {
     headers: {
       Authorization: import.meta.env.VITE_PEXELS_API_KEY,
@@ -50,4 +46,19 @@ export default async function getCuratedPhotos({
   const nextPageInUrl = nextPageUrl ? nextPageUrl.searchParams.get('page') : undefined;
 
   return { ...data, next_page: nextPageInUrl || '' };
+}
+
+export async function getPhotoById(id: string) {
+  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/photos/${id}`, {
+    headers: {
+      Authorization: import.meta.env.VITE_PEXELS_API_KEY,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch photos');
+  }
+
+  const data = await response.json();
+  return data;
 }
