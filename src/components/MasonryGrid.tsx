@@ -5,7 +5,7 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import getCuratedPhotos, { CuratedPhoto } from '@/utils/api';
 
 const ImageContainer = styled.div`
-  columns: 6 120px;
+  columns: 4 180px;
   gap: 20px;
 
   img {
@@ -13,12 +13,6 @@ const ImageContainer = styled.div`
     border-radius: 5px;
     width: 100%;
   }
-`;
-
-const LoadMoreSection = styled.div`
-  position: absolute;
-  left: 0;
-  height: 200px;
 `;
 
 const MasonryGrid = () => {
@@ -56,7 +50,7 @@ const MasonryGrid = () => {
           <img key={photo.id} src={photo.src.large} alt={photo.alt} onClick={() => handlePhotoClick(photo.id)} />
         ))}
       </ImageContainer>
-      {nextPage && <LoadMoreSection ref={loadMoreRef} />}
+      {nextPage && <div ref={loadMoreRef} />}
     </>
   );
 };
