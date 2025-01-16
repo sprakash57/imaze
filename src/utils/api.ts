@@ -56,7 +56,7 @@ export async function getPhotoById(id: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch photos');
+    throw new Error('Failed to get the requested photo');
   }
 
   const data = await response.json();

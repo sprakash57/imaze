@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { CuratedPhoto, getCuratedPhotos } from '@/utils/api';
 
@@ -44,7 +44,7 @@ const MasonryGrid = () => {
 
   return (
     <>
-      <ImageContainer ref={containerRef}>
+      <ImageContainer ref={containerRef} data-testid="masonry-grid">
         {photos.map(photo => (
           <img key={photo.id} src={photo.src.large} alt={photo.alt} onClick={() => handlePhotoClick(photo.id)} />
         ))}

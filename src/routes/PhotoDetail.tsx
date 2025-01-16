@@ -2,12 +2,13 @@ import ArrowReply from '@/assets/icons/ArrowReply';
 import { CuratedPhoto, getPhotoById } from '@/utils/api';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const PhotoDetail = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [photoDetail, setPhotoDetail] = useState<CuratedPhoto | null>(null);
 
   const handleBackNavigation = () => {
@@ -21,8 +22,7 @@ const PhotoDetail = () => {
         const detail = await getPhotoById(params.id as string);
         setPhotoDetail(detail);
       } catch (error) {
-        console.error(error);
-        alert('This image is not available at the moment. Please try later.');
+        setError((error as Error).message);
       } finally {
         setLoading(false);
       }
@@ -39,6 +39,11 @@ const PhotoDetail = () => {
         </BackButton>
         {loading ? (
           <Placeholder />
+        ) : error ? (
+          <ErrorSection>
+            <h1>Something went wrong</h1>
+            <h3>{error}</h3>
+          </ErrorSection>
         ) : (
           <>
             <h1>{photoDetail?.alt}</h1>
@@ -48,7 +53,7 @@ const PhotoDetail = () => {
                 {photoDetail?.photographer}
               </a>
             </h4>
-            {loading ? <Placeholder /> : <img src={photoDetail?.src.landscape} alt={photoDetail?.alt} />}
+            <img src={photoDetail?.src.landscape} alt={photoDetail?.alt} />
             <div>
               Explore at{' '}
               <a href={photoDetail?.url} target="_blank" rel="noopener noreferrer">
@@ -64,7 +69,7 @@ const PhotoDetail = () => {
 
 export default PhotoDetail;
 
-const Container = styled.div`
+const Container = styled.main`
   padding: 40px;
 
   a {
@@ -76,7 +81,7 @@ const Container = styled.div`
   }
 `;
 
-const BackButton = styled.div`
+const BackButton = styled.section`
   align-self: flex-start;
   cursor: pointer;
 `;
@@ -90,7 +95,7 @@ const Content = styled.article`
   gap: 16px;
 
   h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     text-align: center;
   }
 
@@ -103,9 +108,17 @@ const Content = styled.article`
   }
 `;
 
-const Placeholder = styled.div`
+const ErrorSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+`;
+
+const Placeholder = styled.section`
   width: 100%;
-  height: 500px;
+  height: 800px;
   border-radius: 15px;
   background-color: #eee;
   background-image: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
