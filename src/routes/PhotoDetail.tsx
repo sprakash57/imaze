@@ -34,13 +34,13 @@ const PhotoDetail = () => {
   return (
     <Container>
       <Content>
-        <BackButton role="button" onClick={handleBackNavigation}>
+        <BackButton role="button" onClick={handleBackNavigation} aria-label="Go Back">
           <ArrowReply size={30} fill="tomato" />
         </BackButton>
         {loading ? (
-          <Placeholder />
+          <Placeholder aria-label="Loading content" />
         ) : error ? (
-          <ErrorSection>
+          <ErrorSection aria-live="assertive">
             <h1>Something went wrong</h1>
             <h3>{error}</h3>
           </ErrorSection>
@@ -53,9 +53,11 @@ const PhotoDetail = () => {
                 {photoDetail?.photographer}
               </a>
             </h4>
-            <img src={photoDetail?.src.landscape} alt={photoDetail?.alt} />
+            <ImageWrapper>
+              <img src={photoDetail?.src.large} alt={photoDetail?.alt} />
+            </ImageWrapper>
             <div>
-              Explore at{' '}
+              Explore in{' '}
               <a href={photoDetail?.url} target="_blank" rel="noopener noreferrer">
                 Pexels
               </a>
@@ -75,9 +77,9 @@ const Container = styled.main`
   a {
     text-decoration: none;
     padding: 2px 4px;
-    background: yellow;
+    background: tomato;
     border-radius: 5px;
-    color: tomato;
+    color: #242424;
   }
 `;
 
@@ -87,7 +89,6 @@ const BackButton = styled.section`
 `;
 
 const Content = styled.article`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,12 +99,17 @@ const Content = styled.article`
     font-size: 2rem;
     text-align: center;
   }
+`;
+
+const ImageWrapper = styled.div`
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
 
   img {
-    margin: 20px 0;
     border-radius: 15px;
-    width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
   }
 `;
@@ -117,8 +123,9 @@ const ErrorSection = styled.section`
 `;
 
 const Placeholder = styled.section`
-  width: 100%;
-  height: 800px;
+  margin-top: 80px;
+  width: 450px;
+  height: 500px;
   border-radius: 15px;
   background-color: #eee;
   background-image: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);

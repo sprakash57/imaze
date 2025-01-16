@@ -30,7 +30,7 @@ export interface GetCuratedPhotosResponse {
 }
 
 export async function getCuratedPhotos({ pageParam = '1' }: { pageParam: string }): Promise<GetCuratedPhotosResponse> {
-  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${pageParam}&per_page=${20}`, {
+  const response = await fetch(`${import.meta.env.VITE_PEXELS_API_URL}/curated?page=${pageParam}&per_page=${50}`, {
     headers: {
       Authorization: import.meta.env.VITE_PEXELS_API_KEY,
     },
