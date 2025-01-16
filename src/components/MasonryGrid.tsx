@@ -8,8 +8,8 @@ const MasonryGrid = () => {
   const navigate = useNavigate();
   const [photos, setPhotos] = useState<CuratedPhoto[]>([]);
   const [nextPage, setNextPage] = useState<string>('1');
+  const [error, setError] = useState<string>('');
   const loadMoreRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const uniquePhotosRef = useRef(new Set());
 
   const getUniquePhotos = (photos: CuratedPhoto[]) => {
@@ -19,10 +19,14 @@ const MasonryGrid = () => {
   };
 
   const getPhotos = useCallback(async () => {
-    const { photos: newPhotos, next_page } = await getCuratedPhotos({ pageParam: nextPage });
-    const uniquePhotos = getUniquePhotos(newPhotos);
-    setPhotos(prevPhotos => [...prevPhotos, ...uniquePhotos]);
-    setNextPage(next_page);
+    try {
+      const { photos: newPhotos, next_page } = await getCuratedPhotos({ pageParam: nextPage });
+      const uniquePhotos = getUniquePhotos(newPhotos);
+      setPhotos(prevPhotos => [...prevPhotos, ...uniquePhotos]);
+      setNextPage(next_page);
+    } catch (error) {
+      setError((error as Error).message);
+    }
   }, [nextPage]);
 
   const handlePhotoClick = (id: number) => {
@@ -33,8 +37,15 @@ const MasonryGrid = () => {
 
   return (
     <>
-      <ImageContainer ref={containerRef} data-testid="masonry-grid" role="list" aria-label="list of photos">
-        {photos.map(photo => (
+      {error && (
+        <ErrorSection aria-live="assertive">
+          <span role="img">¯\_(ツ)_/¯</span>
+          <h1>Something went wrong</h1>
+          <h3>{error}</h3>
+        </ErrorSection>
+      )}
+      <ImageContainer data-testid="masonry-grid" role="list" aria-label="list of photos">
+        {photos?.map(photo => (
           <img
             key={photo.id}
             src={photo.src.medium}
@@ -51,7 +62,7 @@ const MasonryGrid = () => {
   );
 };
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.section`
   columns: 4 180px;
   gap: 20px;
 
@@ -74,6 +85,14 @@ const ImageContainer = styled.div`
   @media (max-width: 480px) {
     columns: 1 180px;
   }
+`;
+
+const ErrorSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 `;
 
 export default MasonryGrid;

@@ -37,7 +37,7 @@ export async function getCuratedPhotos({ pageParam = '1' }: { pageParam: string 
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch photos');
+    throw new Error('Looks like curated photos are not available at the moment. Please try again later.');
   }
 
   const data: GetCuratedPhotosResponse = await response.json();
@@ -56,7 +56,7 @@ export async function getPhotoById(id: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get the requested photo');
+    throw new Error('Requested photo is not available at the moment. Please try again later.');
   }
 
   const data = await response.json();

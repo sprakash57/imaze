@@ -41,6 +41,7 @@ const PhotoDetail = () => {
           <Placeholder aria-label="Loading content" />
         ) : error ? (
           <ErrorSection aria-live="assertive">
+            <span role="img">¯\_(ツ)_/¯</span>
             <h1>Something went wrong</h1>
             <h3>{error}</h3>
           </ErrorSection>

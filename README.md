@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# Imaze
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple image gallery app built with React, Vite, and TypeScript.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Loads images from Pexels API
+- Responsive Masonry Grid
+- Infinite scroll
+- Image Details with react-router
+- Unit test cases
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+node version `22.0.0` or higher
 
-- Configure the top-level `parserOptions` property like this:
+## Technology stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- React v19
+- react-router
+- emotion
+- vite
+- swc
+- vitest
+- @testing-library/react
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## How to use
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the project and install dependencies with `npm install`
+2. Create a `.env.local` at the root level of project and set below env variables
+   - `VITE_PEXELS_API_KEY` = < Get your free api key from PEXELS >
+   - `VITE_PEXELS_API_URL` = 'https://api.pexels.com/v1'
+3. Run `npm run dev` to start the development server
+4. Open a web browser and navigate to `http://localhost:5173/`
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Unit tests
+
+- Run `npm test` for test cases
+- To generate coverage run `npm run test-cov`
+
+## Decisions made
+
+1. Why did I choose React and Vite instead Next.js ?
+
+   As per requirement, `react-router` was must and it does not make sense to use Next.js's Page router with react-router.
+
+2. Why SWC over Babel?
+
+   SWC is written in Rust, which offers faster compilation speeds compared to Babel, which is written in JavaScript. This can significantly reduce build times. SWC can minify code out-of-the-box. It also has modern ecmascript features. The only downside is the maturity of SWC and community support. Many of the plugins need higher version of node.
+
+3. Why extra logic has been written for uniqueness of photos?
+
+   The `curated` API from Pexels occasionally returns duplicate images. To ensure React renders lists efficiently, which requires unique keys, I had to perform some precalculations to guarantee that the gallery always displays distinct photos.
