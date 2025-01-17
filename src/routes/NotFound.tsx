@@ -37,8 +37,8 @@ const Container = styled.div`
 const BackButton = styled(Link)`
   padding: 4px 8px;
   border-radius: 5px;
-  background: yellow;
-  color: tomato;
+  background: tomato;
+  color: #242424;
   font-weight: bold;
   text-decoration: none;
 `;
