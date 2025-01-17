@@ -12,7 +12,8 @@ A simple image gallery app built with React, Vite, and TypeScript.
 
 ## Prerequisites
 
-node version `22.0.0` or higher
+> [!IMPORTANT]
+> node version `22.0.0` or higher
 
 ## Technology stack
 
